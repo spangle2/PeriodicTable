@@ -1,0 +1,319 @@
+/* Elegant Design for Periodic Table */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  --alkali-metal: #ff6b6b;
+  --alkaline-earth: #ffa06b;
+  --transition-metal: #ffdc6b;
+  --post-transition: #6bffd3;
+  --metalloid: #6bffb1;
+  --nonmetal: #6bc7ff;
+  --halogen: #6b8eff;
+  --noble-gas: #a66bff;
+  --lanthanide: #ff6bd3;
+  --actinide: #ff6b8e;
+  --dark-bg: #1a1a2e;
+  --light-bg: #f5f5f7;
+  --text-light: #f5f5f7;
+  --text-dark: #1a1a2e;
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.3s ease;
+}
+
+body {
+  background: var(--light-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-size: 2.5rem;
+  letter-spacing: 0.1rem;
+  color: var(--text-dark);
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.legend, .filters {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px var(--shadow);
+  flex: 1;
+  min-width: 300px;
+  margin: 0 1rem 1rem 0;
+}
+
+.legend h3, .filters h3 {
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+.alkali-metal { background-color: var(--alkali-metal); }
+.alkaline-earth { background-color: var(--alkaline-earth); }
+.transition-metal { background-color: var(--transition-metal); }
+.post-transition { background-color: var(--post-transition); }
+.metalloid { background-color: var(--metalloid); }
+.nonmetal { background-color: var(--nonmetal); }
+.halogen { background-color: var(--halogen); }
+.noble-gas { background-color: var(--noble-gas); }
+.lanthanide { background-color: var(--lanthanide); }
+.actinide { background-color: var(--actinide); }
+
+select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.periodic-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 2rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px var(--shadow);
+}
+
+.periodic-table {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 4px;
+  width: 100%;
+  min-width: 1100px;
+  position: relative;
+}
+
+.element {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 6px;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 2px 5px var(--shadow);
+  transform-origin: center;
+}
+
+.element:hover {
+  transform: scale(1.1);
+  z-index: 10;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.element.hidden {
+  opacity: 0.3;
+}
+
+.atomic-number {
+  font-size: 0.7rem;
+  font-weight: 300;
+  text-align: left;
+}
+
+.symbol {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.name {
+  font-size: 0.6rem;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.weight {
+  font-size: 0.6rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+.element-details {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  padding: 2rem;
+}
+
+.element-details.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.close-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.element-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  display: flex;
+  width: 80%;
+  max-width: 800px;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition-delay: 0.2s;
+}
+
+.element-details.active .element-card,
+.element-details.active .element-description {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.element-symbol {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-right: 2rem;
+  flex-shrink: 0;
+  color: white;
+}
+
+.element-info {
+  flex: 1;
+}
+
+.element-info h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.detail-label {
+  width: 200px;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+
+.element-description {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  transition-delay: 0.3s;
+  line-height: 1.6;
+}
+
+/* Lanthanide and Actinide placement */
+.lanthanide-row, .actinide-row {
+  grid-column: 3 / span 15;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .element-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .element-symbol {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+  }
+  
+  .detail-label {
+    width: 100%;
+    margin-bottom: 0.25rem;
+  }
+}

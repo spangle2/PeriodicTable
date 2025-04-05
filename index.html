@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Periodic Table</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive Periodic Table</h1>
+        
+        <div class="controls">
+            <div class="legend">
+                <h3>Element Categories</h3>
+                <div class="legend-item"><span class="legend-color alkali-metal"></span> Alkali Metals</div>
+                <div class="legend-item"><span class="legend-color alkaline-earth"></span> Alkaline Earth Metals</div>
+                <div class="legend-item"><span class="legend-color transition-metal"></span> Transition Metals</div>
+                <div class="legend-item"><span class="legend-color post-transition"></span> Post-transition Metals</div>
+                <div class="legend-item"><span class="legend-color metalloid"></span> Metalloids</div>
+                <div class="legend-item"><span class="legend-color nonmetal"></span> Nonmetals</div>
+                <div class="legend-item"><span class="legend-color halogen"></span> Halogens</div>
+                <div class="legend-item"><span class="legend-color noble-gas"></span> Noble Gases</div>
+                <div class="legend-item"><span class="legend-color lanthanide"></span> Lanthanides</div>
+                <div class="legend-item"><span class="legend-color actinide"></span> Actinides</div>
+            </div>
+            <div class="filters">
+                <h3>Filter by Property</h3>
+                <select id="property-select">
+                    <option value="category">Category</option>
+                    <option value="state">State at Room Temperature</option>
+                    <option value="atomic-weight">Atomic Weight</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="periodic-table-container">
+            <div class="periodic-table" id="periodic-table">
+                <!-- Elements will be inserted by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="element-details" id="element-details">
+            <div class="close-button" id="close-details">×</div>
+            <div class="element-card">
+                <div class="element-symbol" id="detail-symbol"></div>
+                <div class="element-info">
+                    <h2 id="detail-name"></h2>
+                    <div class="detail-row">
+                        <div class="detail-label">Atomic Number:</div>
+                        <div class="detail-value" id="detail-number"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Atomic Weight:</div>
+                        <div class="detail-value" id="detail-weight"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Electron Configuration:</div>
+                        <div class="detail-value" id="detail-electron"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">State at Room Temperature:</div>
+                        <div class="detail-value" id="detail-state"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Category:</div>
+                        <div class="detail-value" id="detail-category"></div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Discovered:</div>
+                        <div class="detail-value" id="detail-discovered"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="element-description" id="detail-description"></div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
